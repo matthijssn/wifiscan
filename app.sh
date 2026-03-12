@@ -15,6 +15,13 @@ mqtt_url="${MQTT_URL:-192.168.0.100}"
 # Topic to publish results
 mqtt_topic="${MQTT_TOPIC:-wifi/scan}"
 
+# MQTT user (default - empty)
+mqtt_user=${MQTT_USER}"
+
+# MQTT password (default - empty)
+mqtt_pwd=${MQTT_PWD}"
+
+
 echo
 echo "Wifi scan By Eyal Cohen, version $version"
 echo
@@ -24,6 +31,7 @@ echo "  Delay      - $delay"
 echo "  Interface  - $wlan"
 echo "  Mqtt URL   - $mqtt_url"
 echo "  Mqtt topic - $mqtt_topic"
+echo "  Mqtt user  - $mqtt_user"
 
 while true
 do
@@ -48,7 +56,7 @@ do
     let total+=$i
   done
   
-  # Convert to jsion array format
+  # Convert to json array format
   channels=$(printf ",%s" "${channels[@]}")
   channels=$(echo \[${channels:1}\])
   levels=$(printf ",%s" "${levels[@]}")
@@ -56,7 +64,7 @@ do
   
   # Publish
   message=$(echo \{\"state\":$total,\"version\":\"$version\",\"ssid_channel\":$ssid_channel,\"ssid_networks\":$ssid_networks,\"channels\":$channels,\"levels\":$levels\})
-  mosquitto_pub -h $mqtt_url -t $mqtt_topic -m $message
+  mosquitto_pub -h $mqtt_url -t $mqtt_topic -u $mqtt_user -P $mqtt_pwd -m $message
 
   # Wait before next scan
   sleep $delay

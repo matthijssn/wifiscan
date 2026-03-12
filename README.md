@@ -39,7 +39,10 @@ WLAN | Interface to use | wlan0
 SSID | SSID name | 
 MQTT_URL | Mqtt broker IP | 192.168.0.100
 MQTT_TOPIC | Mqtt topic | wifi/scan
+MQTT_USER | Mqtt userid | 
+MQTT_PWD | Mqtt password |
 LEVEL | Threshold dBm level for counting | -999
+
 
 ## Home assistant sensor
 
